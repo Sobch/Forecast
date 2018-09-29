@@ -60,8 +60,7 @@ export class UsersService {
   remove(user: User) {
     return new Promise ((resolve, reject) => {
       this.httpService.deleteUser(user).then(data => {
-        const usersList = this.userListObservable.getValue().filter(e => {console.log(e); return e._id.$oid !== user._id.$oid; });
-        console.log(user);
+        const usersList = this.userListObservable.getValue().filter(e => e._id.$oid !== user._id.$oid);
         this.userListObservable.next(usersList);
         resolve(data);
       }, response => {

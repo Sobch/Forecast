@@ -31,7 +31,6 @@ export class UserComponent implements OnInit, OnDestroy {
     });
     this.usersService.get(this.id).then(
       (user: User) => {
-        console.log(user);
         this.user = user;
         this.weatherService.get(user.city).then(
           (weather: Weather) => {
@@ -49,7 +48,6 @@ export class UserComponent implements OnInit, OnDestroy {
       },
       response => {
         this.noUserError = true;
-        console.log(response);
       }
     );
   }
