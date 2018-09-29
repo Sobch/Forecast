@@ -10,11 +10,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./add-user.component.css']
 })
 export class AddUserComponent implements OnInit {
-  name: string;
-  surname: string;
-  city: string;
-  country: string;
-  isMale = true;
+  user: User = <User>{};
   loading = false;
 
   constructor(private usersService: UsersService, private router: Router) {}
@@ -22,15 +18,8 @@ export class AddUserComponent implements OnInit {
   ngOnInit() {}
 
   add(addUserForm) {
-    const user: User = {
-      name: this.name,
-      surname: this.surname,
-      city: this.city,
-      country: this.country,
-      isMale: this.isMale
-    };
     this.loading = true;
-    this.usersService.add(user).then(
+    this.usersService.add(this.user).then(
       response => {
         this.loading = false;
         this.router.navigate(['/list']);
