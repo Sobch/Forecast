@@ -1,0 +1,28 @@
+.top-panel {
+  min-height:40px;
+}
+.top-panel h4 {
+  display:inline-block;
+}
+.top-panel button {
+  float:right;
+}
+
+li {list-style-type: none; font-size:1.2em;}
+li:before {
+  content: "\f007";
+  font-family: 'FontAwesome';
+  margin-right:10px;
+}
+li fa[name='venus']{
+  color:rgb(0, 132, 255);
+}
+li fa[name='mars']{
+  color:rgb(255, 0, 0);
+}
+li button {
+  margin: 0px 25px;
+  padding: .10em .8em;
+  font-size: .750em;
+  border: 1px solid #0004;
+}

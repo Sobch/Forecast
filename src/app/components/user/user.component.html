@@ -1,0 +1,68 @@
+<h4>Podgląd użytkownika:</h4>
+<div class="row mt-5">
+  <div class="col">
+    <p>
+      Imię<br>
+      <b *ngIf="user; else loading">{{ user.name }}</b>
+    </p>
+    <p>
+      Nazwisko<br>
+      <b *ngIf="user; else loading">{{ user.surname }}</b>
+    </p>
+    <p>
+      Miasto<br>
+      <b *ngIf="user; else loading">{{ user.city }}</b>
+    </p>
+    <p>
+      Kraj<br>
+      <b *ngIf="user; else loading">{{ user.country }}</b>
+    </p>
+    <p>
+      Płeć<br>
+      <b *ngIf="user; else loading">{{ user.isMale?'mężczyzna':'kobieta' }}</b>
+    </p>
+  </div>
+  <div class="col">
+    <ng-container *ngIf='noWeatherError; else weatherError'>
+      <p>
+        Pogoda<br>
+        <b *ngIf="weatherResponse; else loading">{{ weather.weather[0].main }}</b>
+        <img *ngIf="weatherResponse" src="{{ imageLink }}"/>
+      </p>
+      <p>
+        Temperatura<br>
+        <b *ngIf="weatherResponse; else loading">{{ weather.main.temp | number:'1.0-0' }}°C</b>
+      </p>
+      <p>
+        Wilgotność<br>
+        <b *ngIf="weatherResponse; else loading">{{ weather.main.humidity | number:'1.0-0' }}%</b>
+      </p>
+      <p>
+        Wiatr<br>
+        <b *ngIf="weatherResponse; else loading">{{ weather.wind.speed | number:'1.0-0' }}m/s, kierunek {{ weather.wind.deg | number:'1.0-0' }}°</b>
+      </p>
+    </ng-container>
+  </div>
+</div>
+
+<div class="mt-4">
+<button type="button" class="btn btn-info mr-2"  [routerLink]="['/user/edit/' + id]">Edytuj użytkownika</button>
+<button type="button" class="btn btn-danger" (click)="remove(user)">
+  <fa name="spinner fa-pulse" *ngIf="deleting; else notDeleting"></fa>
+</button>
+<button type="button" class="btn btn-light btn-lg btn-block mt-4" routerLink="/list"><   Wróć do listy</button>
+</div>
+
+<ng-template #loading>
+  <fa name="spinner fa-pulse"></fa>
+</ng-template>
+<ng-template #notDeleting>
+  Usuń użytkownika
+</ng-template>
+<ng-template #weatherError>
+  <div class="alert alert-warning" role="alert">
+    Brak danych pogodowych
+    dla miasta <b>{{user.city}},</b><br>
+    istnieje takie miasto?
+  </div>
+</ng-template>

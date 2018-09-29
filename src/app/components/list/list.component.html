@@ -1,0 +1,21 @@
+<div class="top-panel">
+  <h4>Lista użytkowników:</h4>
+  <button type="button" class="btn btn-primary" routerLink="/addUser">Dodaj użytkownika <fa name="plus" class="fa-sm"></fa></button>
+</div>
+<ng-container *ngIf="userList.length > 0; else noUsers">
+  <ul>
+    <li *ngFor="let user of userList">
+      {{ user.surname + ' ' + user.name + ', ' + user.city + ', ' + user.country }}
+      <ng-container *ngIf="user.isMale; else female">
+        <fa name="mars"></fa>
+      </ng-container>
+      <button type="button" class="btn btn btn-outline-dark btn-sm" [routerLink]="['/user/' + user._id.$oid]">Podgląd <fa name="eye"></fa></button>
+    </li>
+  </ul>
+</ng-container>
+<ng-template #noUsers>
+  <h5>Brak Użytkowników.</h5>
+</ng-template>
+<ng-template #female>
+  <fa name="venus"></fa>
+</ng-template>

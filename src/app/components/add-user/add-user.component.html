@@ -1,0 +1,44 @@
+<h4 class="mb-5">Dodaj użytkownika</h4>
+<form (onSubmit)="add(addUserForm)" #addUserForm="ngForm">
+  <div class="form-group">
+    <label for="inputName">Imię</label>
+    <input [(ngModel)]="name" name="name" type="text" class="form-control" id="inputName" placeholder="Wprowadź imię" required>
+  </div>
+  <div class="form-group">
+    <label for="inputSurname">Nazwisko</label>
+    <input [(ngModel)]="surname" name="surname" type="text" class="form-control" id="inputSurname" placeholder="Wprowadź nazwisko" required>
+  </div>
+  <div class="form-group">
+    <label for="inputCity">Miasto</label>
+    <input [(ngModel)]="city" name="city" type="text" class="form-control" id="inputCity" aria-describedby="cityHelp" placeholder="Wprowadź miasto" required>
+    <small id="cityHelp" class="form-text text-muted">To pole posłuży do pobierania pogody.</small>
+  </div>
+  <div class="form-group">
+    <label for="inputCountry">Kraj</label>
+    <input [(ngModel)]="country" name="country" type="text" class="form-control" id="inputCountry" placeholder="Wprowadź kraj" required>
+  </div>
+
+  <fieldset class="form-group" id="gender">
+    <label>Płeć</label>
+    <div class="form-check">
+      <label class="form-check-label">
+        <input [(ngModel)]="isMale" type="radio" class="form-check-input" name="optionsRadios" id="genderMale" [value]="true" checked>
+        Mężczyzna
+      </label>
+    </div>
+    <div class="form-check">
+      <label class="form-check-label">
+        <input [(ngModel)]="isMale" type="radio" class="form-check-input" name="optionsRadios" id="genderFemale" [value]="false">
+        Kobieta
+      </label>
+    </div>
+  </fieldset>
+  <button (click)="add()" [disabled]="!addUserForm.valid" class="btn btn-primary btn-block mt-4">
+    <fa name="spinner fa-pulse" *ngIf="loading; else notLoading"></fa>
+  </button>
+</form>
+<button class="btn btn-light mt-4 px-5" routerLink="/list">< Wróć do listy</button>
+
+<ng-template #notLoading>
+  Dodaj
+</ng-template>
