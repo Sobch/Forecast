@@ -1,35 +1,37 @@
 <h4 class="mb-5">Dodaj użytkownika</h4>
-<form (ngSubmit)="edit(editUserForm)" #editUserForm="ngForm">
+<form (ngSubmit)="edit(editUserForm)" #editUserForm="ngForm" *ngIf="!noUserError; else userError">
   <div class="form-group">
     <label for="inputName">Imię</label>
     <input [(ngModel)]="user.name" name="name" type="text" class="form-control" id="inputName" placeholder="Wprowadź imię" required>
   </div>
   <div class="form-group">
     <label for="inputSurname">Nazwisko</label>
-    <input [(ngModel)]="user.surname" name="surname" type="text" class="form-control" id="inputSurname" placeholder="Wprowadź nazwisko" required>
+    <input [(ngModel)]="user.surname" name="surname" type="text" class="form-control" id="inputSurname" placeholder="Wprowadź nazwisko"
+      required>
   </div>
   <div class="form-group">
     <label for="inputCity">Miasto</label>
-    <input [(ngModel)]="user.city" name="city" type="text" class="form-control" id="inputCity" aria-describedby="cityHelp" placeholder="Wprowadź miasto" required>
+    <input [(ngModel)]="user.city" name="city" type="text" class="form-control" id="inputCity" aria-describedby="cityHelp" placeholder="Wprowadź miasto"
+      required>
     <small id="cityHelp" class="form-text text-muted">To pole posłuży do pobierania pogody.</small>
   </div>
   <div class="form-group">
     <label for="inputCountry">Kraj</label>
-    <input [(ngModel)]="user.country" name="country" type="text" class="form-control" id="inputCountry" placeholder="Wprowadź kraj" required>
+    <input [(ngModel)]="user.country" name="country" type="text" class="form-control" id="inputCountry" placeholder="Wprowadź kraj"
+      required>
   </div>
 
   <fieldset class="form-group" id="gender">
     <label>Płeć</label>
     <div class="form-check">
       <label class="form-check-label">
-        <input [(ngModel)]="user.isMale" type="radio" class="form-check-input" name="optionsRadios" id="genderMale" [value]="true" checked>
-        Mężczyzna
+        <input [(ngModel)]="user.isMale" type="radio" class="form-check-input" name="optionsRadios" id="genderMale" [value]="true"
+          checked> Mężczyzna
       </label>
     </div>
     <div class="form-check">
       <label class="form-check-label">
-        <input [(ngModel)]="user.isMale" type="radio" class="form-check-input" name="optionsRadios" id="genderFemale" [value]="false">
-        Kobieta
+        <input [(ngModel)]="user.isMale" type="radio" class="form-check-input" name="optionsRadios" id="genderFemale" [value]="false"> Kobieta
       </label>
     </div>
   </fieldset>
@@ -41,4 +43,9 @@
 
 <ng-template #notLoading>
   Uaktualnij
+</ng-template>
+<ng-template #userError>
+  <div class="alert alert-warning mt-4" role="alert">
+    Nie ma takiego użytkownika.
+  </div>
 </ng-template>

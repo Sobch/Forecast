@@ -10,20 +10,27 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./edit-user.component.css']
 })
 export class EditUserComponent implements OnInit {
-
   id: string;
   user: User = <User>{};
   loading = false;
+  noUserError = false;
 
-  constructor(private usersService: UsersService, private route: ActivatedRoute, private router: Router) {
+  constructor(
+    private usersService: UsersService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
     this.route.params.subscribe(params => {
       this.id = params['id'];
     });
-    this.usersService.get(this.id).then((user: User) => {
-      this.user = user;
-    }, rejected => {
-      alert('Error getting data');
-    });
+    this.usersService.get(this.id).then(
+      (user: User) => {
+        this.user = user;
+      },
+      rejected => {
+        this.noUserError = true;
+      }
+    );
   }
 
   edit(editUserForm) {
@@ -32,10 +39,12 @@ export class EditUserComponent implements OnInit {
       response => {
         this.router.navigate(['/user/' + this.id]);
       },
-      rejected => { alert('Nie powiodło się!'); this.loading = false; }
+      rejected => {
+        alert('Nie powiodło się!');
+        this.loading = false;
+      }
     );
   }
 
   ngOnInit() {}
-
 }

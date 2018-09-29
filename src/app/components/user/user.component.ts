@@ -11,35 +11,48 @@ import { WeatherService } from '../../services/weather.service';
   styleUrls: ['./user.component.css']
 })
 export class UserComponent implements OnInit, OnDestroy {
-
   id: string;
   user: User;
   weather: Weather = <Weather>{};
   weatherResponse = false;
   imageLink: string;
   deleting = false;
-  noWeatherError = true;
+  noWeatherError = false;
+  noUserError = false;
 
-  constructor(private route: ActivatedRoute, private usersService: UsersService,
-          private weatherService: WeatherService, private router: Router) {
+  constructor(
+    private route: ActivatedRoute,
+    private usersService: UsersService,
+    private weatherService: WeatherService,
+    private router: Router
+  ) {
     this.route.params.subscribe(params => {
       this.id = params['id'];
     });
-    this.usersService.get(this.id).then((user: User) => {
-      this.user = user;
-      this.weatherService.get(user.city).then(
-        (weather: Weather) => {
-          this.weather = weather;
-          this.weatherResponse = true;
-          this.imageLink = 'http://openweathermap.org/img/w/' + this.weather.weather[0].icon + '.png';
-        }, rejected => {
-          this.noWeatherError = false;
-        }
-      );
-    }, response => {
-      alert('Error getting user...');
-    });
-   }
+    this.usersService.get(this.id).then(
+      (user: User) => {
+        console.log(user);
+        this.user = user;
+        this.weatherService.get(user.city).then(
+          (weather: Weather) => {
+            this.weather = weather;
+            this.weatherResponse = true;
+            this.imageLink =
+              'http://openweathermap.org/img/w/' +
+              this.weather.weather[0].icon +
+              '.png';
+          },
+          rejected => {
+            this.noWeatherError = true;
+          }
+        );
+      },
+      response => {
+        this.noUserError = true;
+        console.log(response);
+      }
+    );
+  }
 
   remove(user) {
     this.deleting = true;
@@ -47,15 +60,14 @@ export class UserComponent implements OnInit, OnDestroy {
       response => {
         this.router.navigate(['/list']);
       },
-      rejected => { alert('Nie powiodło się!'); this.deleting = false; }
+      rejected => {
+        alert('Nie powiodło się!');
+        this.deleting = false;
+      }
     );
   }
 
-  ngOnInit() {
+  ngOnInit() {}
 
-  }
-
-  ngOnDestroy() {
-  }
-
+  ngOnDestroy() {}
 }

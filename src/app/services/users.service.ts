@@ -4,7 +4,6 @@ import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject, Subject } from 'rxjs';
 
 import { User } from '../models/user';
-import { reject } from 'q';
 
 @Injectable()
 export class UsersService {
@@ -19,18 +18,21 @@ export class UsersService {
     });
   }
 
-  get(id: string): Promise<User> {
-    return new Promise ((resolve, rejected) => {
-      this.httpService.getUser(id).then(data => {
-        resolve(data);
-      }, response => {
-        reject(response.status);
-      });
+  get(id: string) {
+    return new Promise((resolve, reject) => {
+      this.httpService.getUser(id).then(
+        data => {
+          resolve(data);
+        },
+        rejected => {
+          reject(rejected);
+        }
+      );
     });
   }
 
   add(user: User) {
-    return new Promise ((resolve, rejected) => {
+    return new Promise ((resolve, reject) => {
       const usersList = this.userListObservable.getValue();
       this.httpService.postUser(user).then(data => {
         usersList.push(data);
@@ -43,7 +45,7 @@ export class UsersService {
   }
 
   edit(user: User) {
-    return new Promise ((resolve, rejected) => {
+    return new Promise ((resolve, reject) => {
       const usersList = this.userListObservable.getValue();
       this.httpService.putUser(user).then(data => {
         const index = usersList.findIndex(e => e._id.$oid === user._id.$oid);
@@ -56,7 +58,7 @@ export class UsersService {
   }
 
   remove(user: User) {
-    return new Promise ((resolve, rejected) => {
+    return new Promise ((resolve, reject) => {
       this.httpService.deleteUser(user).then(data => {
         const usersList = this.userListObservable.getValue().filter(e => {console.log(e); return e._id.$oid !== user._id.$oid; });
         console.log(user);

@@ -35,7 +35,10 @@ export class AddUserComponent implements OnInit {
         this.loading = false;
         this.router.navigate(['/list']);
       },
-      rejected => { alert('Nie powiodło się!'); this.loading = false; }
+      rejected => {
+        alert('Nie powiodło się!');
+        this.loading = false;
+      }
     );
   }
 }

@@ -6,12 +6,9 @@ import { HttpService } from './http.service';
 
 @Injectable()
 export class WeatherService {
-
   private weatherObservable = new BehaviorSubject<Weather>(<Weather>{});
 
-  constructor(private httpService: HttpService) {
-
-  }
+  constructor(private httpService: HttpService) {}
 
   get(city: string) {
     return new Promise((resolve, reject) => {
